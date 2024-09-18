@@ -2,6 +2,9 @@ package com.aksharspringboot.dto;
 
 import com.aksharspringboot.model.DepartmentVo;
 import com.aksharspringboot.model.UserVo;
+import com.aksharspringboot.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,15 +16,14 @@ import org.springframework.data.mongodb.core.mapping.DBRef;
 @NoArgsConstructor
 public class TeacherDto {
 
-    private String id;
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId id;
 
     private String teacherId;
 
     private String firstName;
 
     private String lastName;
-
-    private int enabled;
 
     private String departmentId;
 

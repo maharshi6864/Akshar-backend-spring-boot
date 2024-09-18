@@ -17,6 +17,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -60,7 +61,9 @@ public class PublicController {
         try {
             this.authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
+
             String username = this.userDetailsServiceImp.loadUserByUsername(user.getUsername()).getUsername();
+
             String jwt = "Bearer" + jwtUtil.generateToken(username);
 
             ResponseCookie jwtCookie = ResponseCookie.from("Authentication", jwt)
@@ -72,7 +75,7 @@ public class PublicController {
                     .build();
             response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
 
-            return new ResponseEntity<>(new Response("Valid User Name and password", username, true), HttpStatus.OK);
+            return new ResponseEntity<>(new Response("Valid User Name and password", Map.of("username",username,"role",this.userRepository.findByUsername(username).get(0).getRole()), true), HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(new Response("Username or password invalid.", null, false), HttpStatus.BAD_REQUEST);
