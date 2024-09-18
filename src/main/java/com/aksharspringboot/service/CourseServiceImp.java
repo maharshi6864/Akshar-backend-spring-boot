@@ -57,21 +57,20 @@ public class CourseServiceImp implements CourseService {
     @Override
     public Response updateCourse(CourseDto courseDto) {
         try {
-            // Find the department by departmentId
+
             List<CourseVo> courseVoList = this.courseRepository.findAllById(courseDto.getId());
 
-            // Check if department is found
             if (courseVoList.isEmpty()) {
                 return new Response("Course not found.", null, false);
             }
 
             CourseVo courseVo = courseVoList.get(0);
-            // Update department fields
+
             courseVo.setCourseId(courseDto.getCourseId());
             courseVo.setCourseName(courseDto.getCourseName());
             courseVo.setCourseShortName(courseDto.getCourseShortName());
             courseVo.setDepartmentVo(this.departmentRepository.findByDepartmentId(courseDto.getDepartmentId()).get(0));
-            // Save the updated department
+
             this.courseRepository.save(courseVo);
 
             return new Response("Successfully updated course", courseVo, true);

@@ -1,5 +1,8 @@
 package com.aksharspringboot.dto;
 
+import com.aksharspringboot.utils.ObjectIdSerializer;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +13,9 @@ import org.bson.types.ObjectId;
 @NoArgsConstructor
 public class StudentDto {
 
-    private String id;
+    @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId id;
 
     private String enrollmentNumber;
 
