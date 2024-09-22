@@ -22,7 +22,7 @@ public class DepartmentDto {
 
     private String departmentShortName;
 
-    private TeacherVo teacherVo;
+    private String teacherInfo;
 
     private int courses;
 
