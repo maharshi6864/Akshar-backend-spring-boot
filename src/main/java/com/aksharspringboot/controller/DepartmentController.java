@@ -36,12 +36,16 @@ public class DepartmentController {
         return new ResponseEntity<>( response, HttpStatus.OK);
     }
 
+    @PostMapping("admin/department/deleteDepartment")
+    public ResponseEntity<Response> deleteDepartment(@RequestBody DepartmentDto departmentDto) {
+        Response response = this.departmentService.deleteDepartment(departmentDto);
+        return new ResponseEntity<>( response, HttpStatus.OK);
+    }
+
     @PostMapping("admin/department/checkForDepartmentIdAvail")
     public ResponseEntity<Response> checkForDepartmentIdAvail(@RequestBody DepartmentDto departmentDto) {
         Response response = this.departmentService.checkForDepartmentIdAvail(departmentDto);
         return new ResponseEntity<>( response, HttpStatus.OK);
     }
-
-
 
 }

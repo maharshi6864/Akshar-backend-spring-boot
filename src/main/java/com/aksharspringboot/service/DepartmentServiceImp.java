@@ -8,6 +8,7 @@ import com.aksharspringboot.repository.CourseRepository;
 import com.aksharspringboot.repository.DepartmentRepository;
 import com.aksharspringboot.repository.TeacherRepository;
 import jakarta.transaction.Transactional;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -51,14 +52,8 @@ public class DepartmentServiceImp implements DepartmentService {
             return new Response("Failed to search departments.", null, false);
         }
         for (DepartmentVo departmentVo : departmentVoList) {
-            TeacherVo teacherVo=departmentVo.getTeacherVo();
-            if (teacherVo==null)
-            {
-                teacherVo=new TeacherVo();
-                teacherVo.setFirstName("yet not assigned");
-            }
             DepartmentDto departmentDto = new DepartmentDto(departmentVo.getId(), departmentVo.getDepartmentId(),
-                    departmentVo.getDepartmentName(), departmentVo.getDepartmentShortName(),teacherVo,this.courseRepository.findByDepartmentVo(departmentVo).size(),this.teacherRepository.findByDepartmentVo(departmentVo).size());
+                    departmentVo.getDepartmentName(), departmentVo.getDepartmentShortName(),departmentVo.getTeacherInfo(),this.courseRepository.findByDepartmentVo(departmentVo).size(),this.teacherRepository.findByDepartmentVo(departmentVo).size());
             departmentDtoList.add(departmentDto);
         }
         return new Response("Successfully searched department", Map.of("departmentList", departmentDtoList), true);
@@ -80,11 +75,11 @@ public class DepartmentServiceImp implements DepartmentService {
             departmentVo.setDepartmentId(departmentDto.getDepartmentId());
             departmentVo.setDepartmentName(departmentDto.getDepartmentName());
             departmentVo.setDepartmentShortName(departmentDto.getDepartmentShortName());
-
+            departmentVo.setTeacherInfo(departmentDto.getTeacherInfo());
             // Save the updated department
             this.departmentRepository.save(departmentVo);
 
-            return new Response("Successfully updated department", departmentVo, true);
+            return new Response("Successfully updated department", departmentDto, true);
         } catch (Exception e) {
             e.printStackTrace();
             return new Response("Failed to update department.", null, false);
@@ -104,7 +99,27 @@ public class DepartmentServiceImp implements DepartmentService {
         {
             return new Response("Successfully searched department", "Department id available", true);
         }
+        if (departmentDto.getId() == null) {
+            departmentDto.setId(new ObjectId());
+        }
+        if(departmentVoList.size()==1&&departmentDto.getId().equals(departmentVoList.get(0).getId()))
+        {
+            return new Response("Successfully searched department", "Department id available", true);
+        }
         return new Response("Successfully searched department", "DepartmentId is not available", false);
+    }
+
+    @Override
+    public Response deleteDepartment(DepartmentDto departmentDto) {
+        try{
+            DepartmentVo departmentVo=new DepartmentVo(departmentDto.getId(),departmentDto.getDepartmentId(),null,null,null);
+            departmentRepository.delete(departmentVo);
+            return new Response("Successfully deleted teacher", departmentDto, true);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return new Response("Failed to delete teacher", departmentDto, true);
+        }
     }
 
 }

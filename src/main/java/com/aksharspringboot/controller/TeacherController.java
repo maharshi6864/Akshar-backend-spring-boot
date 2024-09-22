@@ -46,7 +46,6 @@ public class TeacherController {
 
     @PostMapping("admin/teacher/getAllTeacherForDepartment")
     public ResponseEntity<Response> getAllTeacherForDepartment(@RequestBody DepartmentDto departmentDto) {
-        System.out.println("Hello world");
         Response response = teacherService.getAllTeacherForDepartment(departmentDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }

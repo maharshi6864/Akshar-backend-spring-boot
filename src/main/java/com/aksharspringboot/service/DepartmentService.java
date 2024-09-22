@@ -13,4 +13,6 @@ public interface DepartmentService {
 
     Response checkForDepartmentIdAvail(DepartmentDto departmentDto);
 
+    Response deleteDepartment(DepartmentDto departmentDto);
+
 }
