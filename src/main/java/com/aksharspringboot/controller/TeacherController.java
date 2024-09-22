@@ -1,15 +1,16 @@
 package com.aksharspringboot.controller;
 
+import com.aksharspringboot.dto.DepartmentDto;
 import com.aksharspringboot.dto.Response;
 import com.aksharspringboot.dto.TeacherDto;
 import com.aksharspringboot.service.TeacherService;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class TeacherController {
 
     @Autowired
@@ -41,5 +42,12 @@ public class TeacherController {
     {
         Response response=this.teacherService.deleteTeacher(teacherDto);
         return new ResponseEntity<Response>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("admin/teacher/getAllTeacherForDepartment")
+    public ResponseEntity<Response> getAllTeacherForDepartment(@RequestBody DepartmentDto departmentDto) {
+        System.out.println("Hello world");
+        Response response = teacherService.getAllTeacherForDepartment(departmentDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

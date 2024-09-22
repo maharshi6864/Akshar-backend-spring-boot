@@ -11,4 +11,6 @@ public interface DepartmentService {
 
     Response updateDepartment(DepartmentDto departmentDto);
 
+    Response checkForDepartmentIdAvail(DepartmentDto departmentDto);
+
 }

@@ -71,7 +71,7 @@ public class PublicController {
                     .secure(false) // Use this if your app is served over HTTPS
                     .path("/")
                     .maxAge(24 * 60 * 60) // Set cookie expiration time
-                    .sameSite("Strict") // SameSite attribute for CSRF protection
+                    .sameSite("Lax") // SameSite attribute for CSRF protection
                     .build();
             response.addHeader(HttpHeaders.SET_COOKIE, jwtCookie.toString());
 

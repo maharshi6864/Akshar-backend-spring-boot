@@ -1,7 +1,9 @@
 package com.aksharspringboot.service;
 
+import com.aksharspringboot.dto.DepartmentDto;
 import com.aksharspringboot.dto.Response;
 import com.aksharspringboot.dto.TeacherDto;
+import com.aksharspringboot.model.DepartmentVo;
 import com.aksharspringboot.model.TeacherVo;
 import com.aksharspringboot.repository.DepartmentRepository;
 import com.aksharspringboot.repository.TeacherRepository;
@@ -88,5 +90,23 @@ public class TeacherServiceImp implements TeacherService {
             e.printStackTrace();
             return new Response("Failed to delete teacher", teacherDto, true);
         }
+    }
+
+    @Override
+    public Response getAllTeacherForDepartment(DepartmentDto departmentDto) {
+        List<TeacherVo> teacherVoList = new ArrayList<>();
+        List<TeacherDto> teacherDtoList = new ArrayList<>();
+        try {
+            DepartmentVo departmentVo=new DepartmentVo(departmentDto.getId(),departmentDto.getDepartmentId(),null,null,null);
+            teacherVoList = this.teacherRepository.findByDepartmentVo(departmentVo);
+            for (TeacherVo teacherVo : teacherVoList) {
+                TeacherDto teacherDto = new TeacherDto(teacherVo.getId(), teacherVo.getTeacherId(), teacherVo.getFirstName(), teacherVo.getLastName(), teacherVo.getDepartmentVo().getDepartmentId(), teacherVo.getDepartmentVo().getDepartmentName(), teacherVo.getDepartmentVo().getDepartmentShortName());
+                teacherDtoList.add(teacherDto);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Response("Failed to search Teacher by departmentId.", null, false);
+        }
+        return new Response("Teacher searched by departmentId successfully.", Map.of("teacherList", teacherDtoList), true);
     }
 }

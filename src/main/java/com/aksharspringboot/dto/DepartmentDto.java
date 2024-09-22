@@ -1,5 +1,6 @@
 package com.aksharspringboot.dto;
 
+import com.aksharspringboot.model.TeacherVo;
 import com.aksharspringboot.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
@@ -20,4 +21,10 @@ public class DepartmentDto {
     private String departmentName;
 
     private String departmentShortName;
+
+    private TeacherVo teacherVo;
+
+    private int courses;
+
+    private int teachers;
 }

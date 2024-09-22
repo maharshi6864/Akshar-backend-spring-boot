@@ -1,5 +1,6 @@
 package com.aksharspringboot.repository;
 
+import com.aksharspringboot.model.CourseVo;
 import com.aksharspringboot.model.DepartmentVo;
 import com.aksharspringboot.model.TeacherVo;
 import org.bson.types.ObjectId;
@@ -10,4 +11,6 @@ import java.util.List;
 public interface TeacherRepository extends MongoRepository<TeacherVo, ObjectId> {
 
     List<TeacherVo> findAllById(ObjectId id);
+
+    List<TeacherVo> findByDepartmentVo(DepartmentVo departmentVo);
 }
