@@ -29,4 +29,6 @@ public class DepartmentVo {
 
     private String departmentShortName;
 
+    private TeacherVo teacherVo;
+
 }

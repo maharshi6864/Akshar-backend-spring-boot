@@ -12,4 +12,6 @@ public interface CourseRepository extends MongoRepository<CourseVo, ObjectId> {
     List<CourseVo> findByCourseId(String courseId);
 
     List<CourseVo> findAllById(ObjectId id);
+
+    List<CourseVo> findByDepartmentVo(DepartmentVo departmentVo);
 }
