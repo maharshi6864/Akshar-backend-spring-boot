@@ -6,29 +6,25 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-
-@Document(collection = "batch_vo")
+@Document(collection = "section_vo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatchVo {
+public class SectionVo {
 
     @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String batchName;
+    private String sectionName;
 
-    private List<String> lectureTimings;
+    @DBRef
+    private BatchVo batchVo;
 
-    private String startData;
-
-    private String endDate;
-
-    private CourseVo courseVo;
 }

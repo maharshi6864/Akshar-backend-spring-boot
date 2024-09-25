@@ -7,28 +7,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.List;
-
-
-@Document(collection = "batch_vo")
+@Document(collection = "whiteboard_notes_vo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatchVo {
+public class WhiteBoardVo {
 
     @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String batchName;
+    private String notesName;
 
-    private List<String> lectureTimings;
+    private long time;
 
-    private String startData;
+    @DBRef
+    private LectureVo lectureVo;
 
-    private String endDate;
+    @DBRef
+    private TeacherVo teacherVo;
 
-    private CourseVo courseVo;
+    @DBRef
+    private SectionVo sectionVo;
 }

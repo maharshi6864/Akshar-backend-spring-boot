@@ -7,28 +7,21 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
 
-import java.util.List;
-
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatchDto {
+public class LectureDto {
 
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String batchName;
+    private String lectureTime;
 
-    private List<String> lectureTimings;
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId sectionId;
 
-    private String startDate;
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId teacherId;
 
-    private String endDate;
-
-    private String courseId;
-
-    private String courseName;
-
-    private String courseShortName;
 
 }
