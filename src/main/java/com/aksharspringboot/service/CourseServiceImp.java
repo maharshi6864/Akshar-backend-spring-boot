@@ -34,7 +34,7 @@ public class CourseServiceImp implements CourseService {
             e.printStackTrace();
             return new Response("Failed To save course", null, false);
         }
-        return new Response("Course added", null, true);
+        return new Response("Course added", courseDto, true);
     }
 
     @Override
