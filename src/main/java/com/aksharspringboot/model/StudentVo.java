@@ -35,4 +35,7 @@ public class StudentVo {
     @DBRef
     private CourseVo courseVo;
 
+    @DBRef
+    private SectionVo sectionVo;
+
 }

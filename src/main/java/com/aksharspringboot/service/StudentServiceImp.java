@@ -28,7 +28,7 @@ public class StudentServiceImp implements StudentService{
     @Override
     public Response addStudent(StudentDto studentDto) {
         try {
-            StudentVo studentVo = new StudentVo(null, studentDto.getEnrollmentNumber(), studentDto.getFirstName(), studentDto.getLastName(), null, this.courseRepository.findByCourseId(studentDto.getCourseId()).get(0));
+            StudentVo studentVo = new StudentVo(null, studentDto.getEnrollmentNumber(), studentDto.getFirstName(), studentDto.getLastName(), null, this.courseRepository.findByCourseId(studentDto.getCourseId()).get(0),null);
             this.studentRepository.save(studentVo);
         } catch (Exception e) {
             e.printStackTrace();

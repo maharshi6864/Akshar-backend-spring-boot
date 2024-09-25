@@ -2,33 +2,32 @@ package com.aksharspringboot.model;
 
 import com.aksharspringboot.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.time.LocalDateTime;
 
-import java.util.List;
-
-
-@Document(collection = "batch_vo")
+@Document(collection = "lecture_vo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BatchVo {
+public class LectureVo {
 
-    @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String batchName;
+    private String lectureActualTimings;
 
-    private List<String> lectureTimings;
+    private long lectureStartTimeStamp;
 
-    private String startData;
+    private long lectureEndTimeStamp;
 
-    private String endDate;
+    @DBRef
+    private SectionVo sectionVo;
 
-    private CourseVo courseVo;
+    @DBRef
+    private TeacherVo teacherVo;
 }
