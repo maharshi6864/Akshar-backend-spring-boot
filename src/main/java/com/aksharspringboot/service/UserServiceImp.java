@@ -1,6 +1,8 @@
 package com.aksharspringboot.service;
 
 
+import com.aksharspringboot.dto.Response;
+import com.aksharspringboot.dto.UserDto;
 import com.aksharspringboot.model.UserVo;
 import com.aksharspringboot.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -28,6 +30,25 @@ public class UserServiceImp implements UserService {
     @Override
     public UserVo getCurrentUser() {
         return this.findByUserName(SecurityContextHolder.getContext().getAuthentication().getName());
+    }
+
+    @Override
+    public Response getUserDetails() {
+        UserVo userVo=this.getCurrentUser();
+        if (userVo.getRole().equals("ADMIN"))
+        {
+            UserDto userDto=new UserDto(userVo.getUsername(),userVo.getRole());
+            return new Response("User Details Found",userDto,true);
+        }else if (userVo.getRole().equals("TEACHER"))
+        {
+            UserDto userDto=new UserDto(userVo.getUsername(),userVo.getRole());
+            return new Response("User Details Found",userDto,true);
+        }else if(userVo.getRole().equals("STUDENT"))
+        {
+            UserDto userDto=new UserDto(userVo.getUsername(),userVo.getRole());
+            return new Response("User Details Found",userDto,true);
+        }
+        return new Response("Failed To found User Details",null,true);
     }
 
 }
