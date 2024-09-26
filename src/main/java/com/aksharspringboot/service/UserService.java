@@ -1,5 +1,6 @@
 package com.aksharspringboot.service;
 
+import com.aksharspringboot.dto.Response;
 import com.aksharspringboot.model.UserVo;
 
 public interface UserService {
@@ -9,4 +10,6 @@ public interface UserService {
   UserVo findByUserName(String username);
 
   UserVo getCurrentUser();
+
+  Response getUserDetails();
 }
