@@ -25,9 +25,20 @@ public class LectureVo {
 
     private long lectureEndTimeStamp;
 
+    private boolean lectureStatus;
+
+    @DBRef
+    private CourseVo courseVo;
+
+    @DBRef
+    private BatchVo batchVo;
+
     @DBRef
     private SectionVo sectionVo;
 
     @DBRef
     private TeacherVo teacherVo;
+
+    @DBRef
+    private ClassRoomVo classRoomVo;
 }

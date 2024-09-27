@@ -17,11 +17,32 @@ public class LectureDto {
 
     private String lectureTime;
 
+    private String batchName;
+
+    private String sectionName;
+
+    private String courseName;
+
+    private String classRoomNumber;
+
+    private long lectureStartTime;
+
+    private long lectureEndTime;
+
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId courseId;
+
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId batchId;
+
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId sectionId;
 
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId teacherId;
+
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId classRoomId;
 
 
 }
