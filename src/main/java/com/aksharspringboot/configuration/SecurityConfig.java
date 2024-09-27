@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())  // Disable CSRF (usually disabled for APIs when using JWTs)
                 .authorizeHttpRequests((auth) -> auth
                         // Permit unauthenticated access to these endpoints
-                        .requestMatchers("/register/**", "/login", "/logoutt", "/server-health", HttpMethod.OPTIONS.name()).permitAll()
+                        .requestMatchers("/register/**", "/login", "/logoutt", "/health-check", HttpMethod.OPTIONS.name()).permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/teacher/**").hasRole("TEACHER")
                         .requestMatchers("/student/**").hasRole("STUDENT")

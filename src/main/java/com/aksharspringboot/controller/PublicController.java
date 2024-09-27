@@ -90,6 +90,10 @@ public class PublicController {
         return new ResponseEntity<>(new Response("Registered SuccesFully",null,true),HttpStatus.OK);
     }
 
-
+    @GetMapping("/health-check")
+    public ResponseEntity<Response> healthCheck()
+    {
+        return new ResponseEntity<>(new Response("Hello world",null,true),HttpStatus.OK);
+    }
 
 }
