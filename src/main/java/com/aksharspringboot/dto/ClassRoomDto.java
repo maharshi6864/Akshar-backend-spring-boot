@@ -1,21 +1,18 @@
-package com.aksharspringboot.model;
+package com.aksharspringboot.dto;
 
 import com.aksharspringboot.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "class_room_vo")
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassRoomVo {
-
-    @Id
+public class ClassRoomDto {
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
@@ -36,5 +33,4 @@ public class ClassRoomVo {
     private double bottomLeftLongitude;
 
     private double bottomLeftLatitude;
-
 }

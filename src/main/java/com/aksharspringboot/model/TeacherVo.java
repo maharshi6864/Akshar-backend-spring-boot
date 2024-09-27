@@ -22,8 +22,6 @@ public class TeacherVo {
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    @NonNull
-    @Indexed(unique = true)
     private String teacherId;
 
     private String firstName;

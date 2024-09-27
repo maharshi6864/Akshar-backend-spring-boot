@@ -21,6 +21,8 @@ public class TeacherDto {
 
     private String teacherId;
 
+    private String teacherEmailAddress;
+
     private String firstName;
 
     private String lastName;

@@ -2,39 +2,32 @@ package com.aksharspringboot.model;
 
 import com.aksharspringboot.utils.ObjectIdSerializer;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "class_room_vo")
+@Document(collection = "attendance_vo")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClassRoomVo {
+public class AttendanceVo {
 
-    @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String classRoomNumber;
+    private long attendanceTimeStamp;
 
-    private double topRightLongitude;
+    private boolean attendanceStatus;
 
-    private double topRightLatitude;
+    @DBRef
+    private ClassRoomVo classRoomVo;
 
-    private double topLeftLongitude;
+    @DBRef
+    private StudentVo studentVo;
 
-    private double topLeftLatitude;
-
-    private double bottomRightLongitude;
-
-    private double bottomRightLatitude;
-
-    private double bottomLeftLongitude;
-
-    private double bottomLeftLatitude;
-
+    @DBRef
+    private TeacherVo teacherVo;
 }
