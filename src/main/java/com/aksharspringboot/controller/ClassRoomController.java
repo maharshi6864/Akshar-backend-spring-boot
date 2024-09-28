@@ -44,4 +44,18 @@ public class ClassRoomController {
         Response response=this.classRoomService.addClassRoomMapping(classRoomDto);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("admin/classRoom/deleteClassRoom")
+    public ResponseEntity<Response> deleteClassRoom(@RequestBody ClassRoomDto classRoomDto)
+    {
+        Response response=this.classRoomService.deleteClassRoom(classRoomDto);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("teacher/classRoom/getAllClassRoom")
+    public ResponseEntity<Response> getClassRoomForTeacher()
+    {
+        Response response=this.classRoomService.getClassRoom();
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

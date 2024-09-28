@@ -39,7 +39,6 @@ public class TeacherServiceImp implements TeacherService {
             UserVo userVo=new UserVo(null,teacherDto.getTeacherEmailAddress(),null,"TEACHER",
                     true,1);
             userVo.setPassword(passwordEncoder.encode("teacher"));
-            this.userRepository.save(userVo);
             UserVo savedUserVo=this.userRepository.save(userVo);
             TeacherVo teacherVo = new TeacherVo(null, teacherDto.getTeacherId(), teacherDto.getFirstName(),
                     teacherDto.getLastName(), savedUserVo,

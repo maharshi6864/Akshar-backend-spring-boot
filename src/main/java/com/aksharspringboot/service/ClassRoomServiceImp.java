@@ -2,7 +2,6 @@ package com.aksharspringboot.service;
 
 import com.aksharspringboot.dto.ClassRoomDto;
 import com.aksharspringboot.dto.Response;
-import com.aksharspringboot.model.BatchVo;
 import com.aksharspringboot.model.ClassRoomVo;
 import com.aksharspringboot.model.DepartmentVo;
 import com.aksharspringboot.repository.ClassRoomRepository;
@@ -42,10 +41,20 @@ public class ClassRoomServiceImp implements ClassRoomService{
     public Response addClassRoomMapping(ClassRoomDto classRoomDto)
     {
         try {
-            ClassRoomVo classRoomVo = new ClassRoomVo(classRoomDto.getId(),classRoomDto.getClassRoomNumber(),classRoomDto.getTopRightLongitude(),
-                    classRoomDto.getTopRightLatitude(), classRoomDto.getTopLeftLongitude(),classRoomDto.getTopLeftLatitude(),
-                    classRoomDto.getBottomRightLongitude(),classRoomDto.getBottomRightLatitude(),
-                    classRoomDto.getBottomLeftLongitude(),classRoomDto.getBottomLeftLatitude());
+            ClassRoomVo classRoomVo = this.classRoomRepository.findById(classRoomDto.getId())
+                    .orElseThrow(() -> new RuntimeException("ClassRoom not found with id: " + classRoomDto.getId()));
+
+// Update only the longitude and latitude fields
+            classRoomVo.setTopRightLongitude(classRoomDto.getTopRightLongitude());
+            classRoomVo.setTopRightLatitude(classRoomDto.getTopRightLatitude());
+            classRoomVo.setTopLeftLongitude(classRoomDto.getTopLeftLongitude());
+            classRoomVo.setTopLeftLatitude(classRoomDto.getTopLeftLatitude());
+            classRoomVo.setBottomRightLongitude(classRoomDto.getBottomRightLongitude());
+            classRoomVo.setBottomRightLatitude(classRoomDto.getBottomRightLatitude());
+            classRoomVo.setBottomLeftLongitude(classRoomDto.getBottomLeftLongitude());
+            classRoomVo.setBottomLeftLatitude(classRoomDto.getBottomLeftLatitude());
+
+// Save the updated object back to the repository
             this.classRoomRepository.save(classRoomVo);
             return new Response("Class room mapped successfully", classRoomDto, true);
         } catch (Exception e) {
@@ -84,6 +93,19 @@ public class ClassRoomServiceImp implements ClassRoomService{
         } catch (Exception e) {
             e.printStackTrace();
             return new Response("Failed to found classroom.", null, false);
+        }
+    }
+
+    @Override
+    public Response deleteClassRoom(ClassRoomDto classRoomDto) {
+        try{
+            ClassRoomVo classRoomVo=new ClassRoomVo(classRoomDto.getId(),null,0,0,0,0,0,0,0,0);
+            classRoomRepository.delete(classRoomVo);
+            return new Response("Successfully deleted classRoom", classRoomDto, true);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            return new Response("Failed to delete classRoom", classRoomDto, true);
         }
     }
 }

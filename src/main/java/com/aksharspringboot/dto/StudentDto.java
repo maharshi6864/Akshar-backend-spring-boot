@@ -23,9 +23,19 @@ public class StudentDto {
 
     private String lastName;
 
-    private String courseId;
+    private String studentEmailAddress;
+
+    private String filePath;
+
+    @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId courseId;
 
     private String courseName;
 
     private String courseShortName;
+
+    @Id
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId sectionId;
 }
