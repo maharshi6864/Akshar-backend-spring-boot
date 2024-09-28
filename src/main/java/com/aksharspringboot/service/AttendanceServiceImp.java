@@ -45,7 +45,7 @@ public class AttendanceServiceImp implements AttendanceService{
 
             boolean result=this.GeofenceCheckerService.checkPresenseOfStudent(classRoomVo,attendanceDto.getPointVo());
 
-            return new Response("Present In Class Status.", Map.of("presenceStatus",true,"attendanceDto",attendanceDto),result);
+            return new Response("Present In Class Status.", Map.of("presenceStatus",result,"attendanceDto",attendanceDto),true);
         }catch (Exception e)
         {
             e.printStackTrace();

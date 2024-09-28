@@ -23,11 +23,19 @@ public class LectureDto {
 
     private String courseName;
 
+    private String teacherName;
+
+    private boolean lectureStatus;
+
+    private String subjectName;
+
     private String classRoomNumber;
 
     private long lectureStartTime;
 
     private long lectureEndTime;
+
+    private boolean studentAttendanceMark;
 
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId courseId;
@@ -44,5 +52,7 @@ public class LectureDto {
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId classRoomId;
 
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId subjectId;
 
 }

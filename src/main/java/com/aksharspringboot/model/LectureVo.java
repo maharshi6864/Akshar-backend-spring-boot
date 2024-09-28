@@ -41,4 +41,7 @@ public class LectureVo {
 
     @DBRef
     private ClassRoomVo classRoomVo;
+
+    @DBRef
+    private SubjectVo subjectVo;
 }
