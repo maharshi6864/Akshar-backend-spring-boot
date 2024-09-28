@@ -98,7 +98,7 @@ public class LectureServiceImp implements LectureService {
                 LectureDto lectureDto = new LectureDto(lectureVo.getId(), lectureVo.getLectureActualTimings(),
                         batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(),teacherVo1.getFirstName()+teacherVo1.getLastName(),lectureVo.isLectureStatus(),subjectVo.getSubjectName(), classRoomVo.getClassRoomNumber(),
                         lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(),false, null,
-                        null, null, null, null,null);
+                        null, null, null, null,null,null);
                 lectureDtoList.add(lectureDto);
             }
             return new Response("Successfully searched lecture For Teacher", Map.of("lectureDto", lectureDtoList), true);
@@ -138,7 +138,7 @@ public class LectureServiceImp implements LectureService {
                 LectureDto lectureDto = new LectureDto(lectureVo.getId(), lectureVo.getLectureActualTimings(),
                         batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(),teacherVo1.getFirstName()+teacherVo1.getLastName(),lectureVo.isLectureStatus(),subjectVo.getSubjectName(), classRoomVo.getClassRoomNumber(),
                         lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(),attendanceVo.isAttendanceStatus(), null,
-                        null, null, null, null,null);
+                        null, null, null, null,null,attendanceVo.getId());
                 lectureDtoList.add(lectureDto);
             }
             return new Response("Successfully searched lecture For Student", Map.of("lectureDto", lectureDtoList), true);
@@ -182,6 +182,7 @@ public class LectureServiceImp implements LectureService {
                         studentVo.getEmailAddress(),
                         studentVo.getFilePath(),
                         attendanceVo.isAttendanceStatus(),
+                        studentVo.getEncodingsPath(),
                         attendanceVo.getId(),
                         studentVo.getCourseVo().getId(),
                         studentVo.getCourseVo().getCourseName(),

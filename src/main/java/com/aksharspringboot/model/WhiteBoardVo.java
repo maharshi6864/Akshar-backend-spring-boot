@@ -24,6 +24,8 @@ public class WhiteBoardVo {
 
     private long time;
 
+    private String filePath;
+
     @DBRef
     private LectureVo lectureVo;
 

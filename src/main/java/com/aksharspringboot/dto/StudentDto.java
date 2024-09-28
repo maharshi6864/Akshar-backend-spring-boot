@@ -29,6 +29,8 @@ public class StudentDto {
 
     private boolean attendanceStatus;
 
+    private String encodingsPath;
+
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId attendanceId;
 
