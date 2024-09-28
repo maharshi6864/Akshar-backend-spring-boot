@@ -27,6 +27,12 @@ public class LectureController {
         return new ResponseEntity<>(this.lectureService.startLecture(lectureDto), HttpStatus.OK);
     }
 
+    @PostMapping("teacher/lecture/endLecture")
+    public ResponseEntity<Response> endLecture(@RequestBody LectureDto lectureDto)
+    {
+        return new ResponseEntity<>(this.lectureService.endLecture(lectureDto), HttpStatus.OK);
+    }
+
     @PostMapping("teacher/lecture/getLecturesByTeacherId")
     public ResponseEntity<Response> getLecturesByTeacherId(@RequestBody TeacherVo teacherVo)
     {

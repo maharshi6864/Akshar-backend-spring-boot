@@ -43,6 +43,9 @@ public class LectureServiceImp implements LectureService {
     @Autowired
     private AttendanceRepository attendanceRepository;
 
+    @Autowired
+    private SubjectRepository subjectRepository;
+
 
     @Override
     public Response startLecture(LectureDto lectureDto) {
@@ -51,8 +54,9 @@ public class LectureServiceImp implements LectureService {
         SectionVo sectionVo = new SectionVo(lectureDto.getSectionId(), null, null);
         TeacherVo teacherVo = new TeacherVo(lectureDto.getTeacherId(), null, null, null, null, null);
         ClassRoomVo classRoomVo = new ClassRoomVo(lectureDto.getClassRoomId(), null, 0, 0, 0, 0, 0, 0, 0, 0);
+        SubjectVo subjectVo=new SubjectVo(lectureDto.getSubjectId(),null,null);
         LectureVo lectureVo = new LectureVo(null, lectureDto.getLectureTime(), System.currentTimeMillis(),
-                0, true, courseVo, batchVo, sectionVo, teacherVo, classRoomVo);
+                0, true, courseVo, batchVo, sectionVo, teacherVo, classRoomVo,subjectVo);
         try {
             LectureVo savedLectureVo = this.lectureRepository.save(lectureVo);
             lectureDto.setId(savedLectureVo.getId());
@@ -89,12 +93,12 @@ public class LectureServiceImp implements LectureService {
                 BatchVo batchVo = this.batchRepository.findAllById(lectureVo.getBatchVo().getId()).get(0);
                 SectionVo sectionVo = this.sectionRepository.findAllById(lectureVo.getSectionVo().getId()).get(0);
                 ClassRoomVo classRoomVo = this.classRoomRepository.findAllById(lectureVo.getClassRoomVo().getId()).get(0);
-//                TeacherVo teacherVo1=this.teacherRepository.findAllById(lectureVo.getTeacherVo().getId()).get(0);
-
+                TeacherVo teacherVo1=this.teacherRepository.findAllById(lectureVo.getTeacherVo().getId()).get(0);
+                SubjectVo subjectVo=this.subjectRepository.findAllById(lectureVo.getSubjectVo().getId()).get(0);
                 LectureDto lectureDto = new LectureDto(lectureVo.getId(), lectureVo.getLectureActualTimings(),
-                        batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(), classRoomVo.getClassRoomNumber(),
-                        lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(), null,
-                        null, null, null, null);
+                        batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(),teacherVo1.getFirstName()+teacherVo1.getLastName(),lectureVo.isLectureStatus(),subjectVo.getSubjectName(), classRoomVo.getClassRoomNumber(),
+                        lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(),false, null,
+                        null, null, null, null,null);
                 lectureDtoList.add(lectureDto);
             }
             return new Response("Successfully searched lecture For Teacher", Map.of("lectureDto", lectureDtoList), true);
@@ -108,20 +112,33 @@ public class LectureServiceImp implements LectureService {
     public Response getLecturesByStudentId(StudentVo studentVo) {
         try {
             StudentVo studentVo1 = this.studentRepository.findAllById(studentVo.getId()).get(0);
-            SectionVo sectionVo = this.sectionRepository.findAllById(studentVo1.getSectionVo().getId()).get(0);
+            SectionVo sectionVo = studentVo1.getSectionVo();
             List<LectureVo> lectureVoList = this.lectureRepository.findBySectionVo(sectionVo);
             List<LectureDto> lectureDtoList = new ArrayList<>();
 
             for (LectureVo lectureVo : lectureVoList) {
                 CourseVo courseVo = this.courseRepository.findAllById(lectureVo.getCourseVo().getId()).get(0);
                 BatchVo batchVo = this.batchRepository.findAllById(lectureVo.getBatchVo().getId()).get(0);
+//                SectionVo sectionVo = this.sectionRepository.findAllById(lectureVo.getSectionVo().getId()).get(0);
                 ClassRoomVo classRoomVo = this.classRoomRepository.findAllById(lectureVo.getClassRoomVo().getId()).get(0);
-//                SectionVo sectionVo=this.sectionRepository.findAllById(lectureVo.getSectionVo().getId()).get(0);
-//                TeacherVo teacherVo1=this.teacherRepository.findAllById(lectureVo.getTeacherVo().getId()).get(0);
+                TeacherVo teacherVo1=this.teacherRepository.findAllById(lectureVo.getTeacherVo().getId()).get(0);
+                SubjectVo subjectVo=this.subjectRepository.findAllById(lectureVo.getSubjectVo().getId()).get(0);
+                Optional<AttendanceVo> existingAttendance = this.attendanceRepository.findByLectureVoAndStudentVo(lectureVo, studentVo);
 
+                AttendanceVo attendanceVo;
+
+                if (existingAttendance.isPresent()) {
+                    // If attendance exists, use the existing attendance
+                    attendanceVo = existingAttendance.get();
+                } else {
+                    // If attendance doesn't exist, create a new one
+                    attendanceVo = new AttendanceVo(null, 0, false, lectureVo.getClassRoomVo(), studentVo, lectureVo.getTeacherVo(),lectureVo);
+                    attendanceVo = this.attendanceRepository.save(attendanceVo);
+                }
                 LectureDto lectureDto = new LectureDto(lectureVo.getId(), lectureVo.getLectureActualTimings(),
-                        batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(), classRoomVo.getClassRoomNumber(),
-                        lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(), null, null, null, null, null);
+                        batchVo.getBatchName(), sectionVo.getSectionName(), courseVo.getCourseName(),teacherVo1.getFirstName()+teacherVo1.getLastName(),lectureVo.isLectureStatus(),subjectVo.getSubjectName(), classRoomVo.getClassRoomNumber(),
+                        lectureVo.getLectureStartTimeStamp(), lectureVo.getLectureEndTimeStamp(),attendanceVo.isAttendanceStatus(), null,
+                        null, null, null, null,null);
                 lectureDtoList.add(lectureDto);
             }
             return new Response("Successfully searched lecture For Student", Map.of("lectureDto", lectureDtoList), true);
