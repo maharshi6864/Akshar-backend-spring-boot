@@ -43,7 +43,7 @@ public class StudentServiceImp implements StudentService{
             userVo.setPassword(passwordEncoder.encode("student"));
             UserVo savedUserVo=this.userRepository.save(userVo);
             StudentVo studentVo = new StudentVo(null, studentDto.getEnrollmentNumber(), studentDto.getFirstName(),
-                    studentDto.getLastName(),studentDto.getStudentEmailAddress(),studentDto.getFilePath(), savedUserVo,
+                    studentDto.getLastName(),studentDto.getStudentEmailAddress(),studentDto.getFilePath(),false, savedUserVo,
                     new CourseVo(studentDto.getCourseId(),null,null,null,null),
                     new SectionVo(studentDto.getSectionId(),null,null));
             this.studentRepository.save(studentVo);
@@ -61,7 +61,7 @@ public class StudentServiceImp implements StudentService{
         try {
             studentVoList = this.studentRepository.findAll();
             for (StudentVo studentVo : studentVoList) {
-                StudentDto studentDto = new StudentDto(studentVo.getId(), studentVo.getEnrollmentNumber(), studentVo.getFirstName(), studentVo.getLastName(),studentVo.getEmailAddress(),studentVo.getFilePath(), studentVo.getCourseVo().getId(), studentVo.getCourseVo().getCourseName(), studentVo.getCourseVo().getCourseShortName(),null);
+                StudentDto studentDto = new StudentDto(studentVo.getId(), studentVo.getEnrollmentNumber(), studentVo.getFirstName(), studentVo.getLastName(),studentVo.getEmailAddress(),studentVo.getFilePath(),false,null, studentVo.getCourseVo().getId(), studentVo.getCourseVo().getCourseName(), studentVo.getCourseVo().getCourseShortName(),null);
                 studentDtoList.add(studentDto);
             }
 

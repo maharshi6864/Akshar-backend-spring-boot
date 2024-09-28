@@ -33,6 +33,8 @@ public class StudentVo {
 
     private String filePath;
 
+    private boolean attendanceStatus;
+
     @DBRef
     private UserVo userVo;
 

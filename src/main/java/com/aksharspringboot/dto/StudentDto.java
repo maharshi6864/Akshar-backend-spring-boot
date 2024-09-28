@@ -13,7 +13,7 @@ import org.bson.types.ObjectId;
 @NoArgsConstructor
 public class StudentDto {
 
-    @Id
+
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
@@ -27,7 +27,11 @@ public class StudentDto {
 
     private String filePath;
 
-    @Id
+    private boolean attendanceStatus;
+
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId attendanceId;
+
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId courseId;
 
@@ -35,7 +39,6 @@ public class StudentDto {
 
     private String courseShortName;
 
-    @Id
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId sectionId;
 }
