@@ -29,6 +29,10 @@ public class StudentVo {
 
     private String lastName;
 
+    private String emailAddress;
+
+    private String filePath;
+
     @DBRef
     private UserVo userVo;
 

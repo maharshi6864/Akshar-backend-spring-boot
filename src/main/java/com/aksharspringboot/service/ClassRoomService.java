@@ -12,4 +12,6 @@ public interface ClassRoomService {
     Response getClassRoom();
 
     Response getClassRoomById(ClassRoomDto classRoomDto);
+
+    Response deleteClassRoom(ClassRoomDto classRoomDto);
 }

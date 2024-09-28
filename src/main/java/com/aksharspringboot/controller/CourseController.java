@@ -28,6 +28,20 @@ public class CourseController {
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
+    @GetMapping("teacher/course/getAllCourse")
+    public ResponseEntity<Response> getAllCourseForTeacher()
+    {
+        Response response=this.courseService.getAllCourse();
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @GetMapping("course/getAllCourse")
+    public ResponseEntity<Response> getAllCourseForE()
+    {
+        Response response=this.courseService.getAllCourse();
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
     @PostMapping("admin/course/updateCourse")
     public ResponseEntity<Response> updateCourse(@RequestBody CourseDto courseDto)
     {

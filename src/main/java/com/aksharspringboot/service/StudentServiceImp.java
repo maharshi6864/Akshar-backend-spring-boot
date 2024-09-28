@@ -2,13 +2,14 @@ package com.aksharspringboot.service;
 
 import com.aksharspringboot.dto.Response;
 import com.aksharspringboot.dto.StudentDto;
-import com.aksharspringboot.dto.TeacherDto;
-import com.aksharspringboot.model.StudentVo;
-import com.aksharspringboot.model.TeacherVo;
+import com.aksharspringboot.model.*;
 import com.aksharspringboot.repository.CourseRepository;
+import com.aksharspringboot.repository.SectionRepository;
 import com.aksharspringboot.repository.StudentRepository;
+import com.aksharspringboot.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,10 +26,26 @@ public class StudentServiceImp implements StudentService{
     @Autowired
     private CourseRepository courseRepository;
 
+    @Autowired
+    private SectionRepository sectionRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Override
     public Response addStudent(StudentDto studentDto) {
         try {
-            StudentVo studentVo = new StudentVo(null, studentDto.getEnrollmentNumber(), studentDto.getFirstName(), studentDto.getLastName(), null, this.courseRepository.findByCourseId(studentDto.getCourseId()).get(0),null);
+            UserVo userVo=new UserVo(null,studentDto.getStudentEmailAddress(),null,"STUDENT",
+                    true,1);
+            userVo.setPassword(passwordEncoder.encode("student"));
+            UserVo savedUserVo=this.userRepository.save(userVo);
+            StudentVo studentVo = new StudentVo(null, studentDto.getEnrollmentNumber(), studentDto.getFirstName(),
+                    studentDto.getLastName(),studentDto.getStudentEmailAddress(),studentDto.getFilePath(), savedUserVo,
+                    new CourseVo(studentDto.getCourseId(),null,null,null,null),
+                    new SectionVo(studentDto.getSectionId(),null,null));
             this.studentRepository.save(studentVo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +61,7 @@ public class StudentServiceImp implements StudentService{
         try {
             studentVoList = this.studentRepository.findAll();
             for (StudentVo studentVo : studentVoList) {
-                StudentDto studentDto = new StudentDto(studentVo.getId(), studentVo.getEnrollmentNumber(), studentVo.getFirstName(), studentVo.getLastName(), studentVo.getCourseVo().getCourseId(), studentVo.getCourseVo().getCourseName(), studentVo.getCourseVo().getCourseShortName());
+                StudentDto studentDto = new StudentDto(studentVo.getId(), studentVo.getEnrollmentNumber(), studentVo.getFirstName(), studentVo.getLastName(),studentVo.getEmailAddress(),studentVo.getFilePath(), studentVo.getCourseVo().getId(), studentVo.getCourseVo().getCourseName(), studentVo.getCourseVo().getCourseShortName(),null);
                 studentDtoList.add(studentDto);
             }
 
@@ -70,7 +87,7 @@ public class StudentServiceImp implements StudentService{
             studentVo.setFirstName(studentDto.getFirstName());
             studentVo.setLastName(studentDto.getLastName());
             studentVo.setEnrollmentNumber(studentDto.getEnrollmentNumber());
-            studentVo.setCourseVo(this.courseRepository.findByCourseId(studentDto.getCourseId()).get(0));
+            studentVo.setCourseVo(this.courseRepository.findAllById(studentDto.getCourseId()).get(0));
 
             this.studentRepository.save(studentVo);
 

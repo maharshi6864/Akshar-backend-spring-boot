@@ -2,8 +2,10 @@ package com.aksharspringboot.controller;
 
 
 import com.aksharspringboot.dto.Response;
+import com.aksharspringboot.dto.StudentDto;
 import com.aksharspringboot.model.UserVo;
 import com.aksharspringboot.repository.UserRepository;
+import com.aksharspringboot.service.StudentService;
 import com.aksharspringboot.service.UserDetailsServiceImp;
 import com.aksharspringboot.utils.JwtUtil;
 import jakarta.servlet.http.HttpServletResponse;
@@ -35,6 +37,9 @@ public class PublicController {
 
     @Autowired
     private UserDetailsServiceImp userDetailsServiceImp;
+
+    @Autowired
+    private StudentService studentService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -88,6 +93,13 @@ public class PublicController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         this.userRepository.save(user);
         return new ResponseEntity<>(new Response("Registered SuccesFully",null,true),HttpStatus.OK);
+    }
+
+    @PostMapping("/register/student")
+    public ResponseEntity<Response> registerStudent(@RequestBody StudentDto studentDto)
+    {
+        Response response=this.studentService.addStudent(studentDto);
+        return new ResponseEntity<>(response,HttpStatus.OK);
     }
 
     @GetMapping("/health-check")

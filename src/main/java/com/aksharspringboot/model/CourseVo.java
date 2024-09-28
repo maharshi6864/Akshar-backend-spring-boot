@@ -22,7 +22,6 @@ public class CourseVo {
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    @Indexed(unique = true)
     private String courseId;
 
     private String courseName;

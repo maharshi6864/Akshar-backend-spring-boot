@@ -35,4 +35,10 @@ public class SubjectController {
         Response response=this.subjectService.getSubjectByCourseId(courseVo);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @PostMapping("teacher/subject/getSubjectByCourseId")
+    public ResponseEntity<Response> getSubjectByCourseIdForTeacher(@RequestBody CourseVo courseVo){
+        Response response=this.subjectService.getSubjectByCourseId(courseVo);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
