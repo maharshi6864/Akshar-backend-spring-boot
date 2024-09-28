@@ -55,4 +55,7 @@ public class LectureDto {
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId subjectId;
 
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId attendanceId;
+
 }
