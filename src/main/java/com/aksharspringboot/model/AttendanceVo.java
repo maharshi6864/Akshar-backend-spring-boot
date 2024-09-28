@@ -30,4 +30,7 @@ public class AttendanceVo {
 
     @DBRef
     private TeacherVo teacherVo;
+
+    @DBRef
+    private LectureVo lectureVo;
 }

@@ -1,5 +1,6 @@
 package com.aksharspringboot.repository;
 
+import com.aksharspringboot.model.SectionVo;
 import com.aksharspringboot.model.StudentVo;
 import com.aksharspringboot.model.UserVo;
 import org.bson.types.ObjectId;
@@ -12,4 +13,6 @@ public interface StudentRepository extends MongoRepository<StudentVo, ObjectId> 
     List<StudentVo> findAllById(ObjectId id);
 
     List<StudentVo> findByUserVo(UserVo userVo);
+
+    List<StudentVo> findBySectionVo(SectionVo sectionVo);
 }

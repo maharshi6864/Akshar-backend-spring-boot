@@ -3,6 +3,8 @@ package com.aksharspringboot.controller;
 import com.aksharspringboot.dto.AttendanceDto;
 import com.aksharspringboot.dto.LectureDto;
 import com.aksharspringboot.dto.Response;
+import com.aksharspringboot.model.AttendanceVo;
+import com.aksharspringboot.model.LectureVo;
 import com.aksharspringboot.model.StudentVo;
 import com.aksharspringboot.model.TeacherVo;
 import com.aksharspringboot.service.LectureService;
@@ -31,6 +33,22 @@ public class LectureController {
         Response response=this.lectureService.getLecturesByTeacherId(teacherVo);
         return new ResponseEntity<>(response,HttpStatus.OK);
     }
+
+    @PostMapping("teacher/lecture/getStudentForCurrentLecture")
+    public ResponseEntity<Response> getStudentForCurrentLecture(@RequestBody LectureVo lectureVo)
+    {
+        Response response=this.lectureService.getStudentForCurrentLecture(lectureVo);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+    @PostMapping("teacher/lecture/markAttendance")
+    public ResponseEntity<Response> markAttendance(@RequestBody AttendanceDto attendanceDto)
+    {
+        Response response=this.lectureService.markAttendance(attendanceDto);
+        return new ResponseEntity<>(response,HttpStatus.OK);
+    }
+
+
 
     @PostMapping("student/lecture/getLecturesByStudentId")
     public ResponseEntity<Response> getLecturesByStudentId(@RequestBody StudentVo studentVo)
