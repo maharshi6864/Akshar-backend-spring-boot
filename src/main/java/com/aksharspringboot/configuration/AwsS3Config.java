@@ -20,15 +20,20 @@ public class AwsS3Config {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private String bucket;
+
+
 
     @Bean(name = "s3Client")
     public S3Client s3Client() {
-        return S3Client.builder()
-                .region(Region.of(region)) // Change to your desired region
-                .credentialsProvider(StaticCredentialsProvider.create(
-                        AwsBasicCredentials.create(secretKey, accessKey))) // Use your actual credentials
+        System.out.println(accessKey);
+        System.out.println(secretKey);
+        AwsBasicCredentials awsCreds = AwsBasicCredentials.create(
+                accessKey,
+                secretKey
+        );
+        return  S3Client.builder()
+                .region(Region.of(region)) // Adjust this to match your bucket's region
+                .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .build();
     }
 }
