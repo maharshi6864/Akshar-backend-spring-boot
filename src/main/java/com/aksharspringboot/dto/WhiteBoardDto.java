@@ -12,11 +12,19 @@ import org.bson.types.ObjectId;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WhiteBoardDto {
-    @Id
+
     @JsonSerialize(using = ObjectIdSerializer.class)
     private ObjectId id;
 
-    private String notesName;
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId lectureId;
 
-    private long time;
+    @JsonSerialize(using = ObjectIdSerializer.class)
+    private ObjectId teacherId;
+
+    private String notesName; // To store the name/title of the SVG
+
+    private long time; // To store the timestamp or time of creation
+
+    private String svgContent; // To store the SVG as a string
 }
